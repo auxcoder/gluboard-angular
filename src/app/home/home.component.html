@@ -1,0 +1,77 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" #sidenav [(opened)]="opened" role="navigation" class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <div class="sidebar-brand-icon">
+        <mat-icon inline="true">opacity</mat-icon>
+      </div>
+      <span class="sidebar-brand-text">GluBoard</span>
+    </a>
+
+    <mat-divider></mat-divider>
+
+    <!-- heading -->
+    <div class="sidebar-heading">Intervals</div>
+
+    <!-- ranges of dates -->
+    <mat-list>
+      <mat-list-item *ngFor="let range of defaultRanges">
+        <button mat-icon-button mat-flat-button color="primary" (click)="updateDataset(range)">
+          <mat-icon inline="true">calendar_today</mat-icon>
+          {{range.label}}
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <button mat-button color="primary" (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <span color="page-title">Samples Board</span>
+
+        <span class="fill-remaining-space"></span>
+
+        <button mat-button role="button" aria-haspopup="true" (click)="openLogin()">
+          <mat-icon inline="true">perm_identity</mat-icon> Login
+        </button>
+
+        <button mat-button type="button" class="" (click)="openPrint()">
+          <mat-icon inline="true">print</mat-icon> Print
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div class="container">
+      <!-- Last sample -->
+      <mat-card *ngFor="let item of lastAves"
+        [ngStyle]="{'width': 100/lastAves.length + '%', 'border-bottom': '3px solid ' + item.color}" class="average">
+        <mat-card-title class="text-xs" [ngStyle]="{'color': item.color}">{{item.label}}</mat-card-title>
+        <mat-icon>opacity</mat-icon>
+      </mat-card>
+    </div>
+
+    <div class="container">
+      <mat-card>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item *ngFor="let sample of samples">
+              {{sample.code}}
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+
+      <div [hidden]="samples || samplesErrMsg">
+        <mat-spinner></mat-spinner>
+        <h4>Loading...</h4>
+      </div>
+      <div *ngIf="samplesErrMsg">
+        <h2>Error</h2>
+        <p>{{samplesErrMsg}}</p>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
