@@ -1,0 +1,112 @@
+@import '../../variables';
+@import '../../mixins';
+
+.example-container {
+  height: 100%;
+
+  .sidebar {
+    background-color: $primary;
+    width: $sidebar-collapsed-width;
+    min-height: 100vh;
+
+    @include media-breakpoint-up(md) {
+      width: $sidebar-base-width !important;
+    }
+
+    .sidebar-brand {
+      text-decoration: none;
+      padding: 1rem;
+      text-align: center;
+      letter-spacing: 0.05rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: white;
+      height: $topbar-base-height;
+
+      .sidebar-brand-icon{
+        font-size: 2rem;
+      }
+
+      .sidebar-brand-text {
+        font-size: 1.5rem;
+        display: none;
+        @include media-breakpoint-up(md) {
+          display: inline-block;
+        }
+      }
+    }
+
+    .mat-divider {
+      border-color: rgba(255,255,255,.15);
+      margin: 0 1.5rem 1.5rem;
+    }
+
+    // .mat-list-base .mat-list-option .mat-list-item-content
+    .mat-list-base .mat-list-item {
+      color: white;
+      text-transform: uppercase;
+      padding: 0;
+
+      .mat-list-item-content {
+        font-size: 0.65rem;
+        padding: 0;
+        @include media-breakpoint-up(sm) {
+        }
+      }
+
+      .mat-button-base {
+        padding: 0;
+        font-weight: 400;
+
+        .mat-icon {
+          opacity: .5;
+        }
+      }
+
+      .mat-icon-button {
+        text-align: center;
+        // .mat-icon {
+        //   font-size: 0.65rem;
+        // }
+
+        @include media-breakpoint-up(sm) {
+          text-align: left;
+        }
+      }
+    }
+
+    .sidebar-heading {
+      opacity: .5;
+      color: white;
+      padding: 0 1rem;
+      font-weight: 800;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      @include media-breakpoint-down(md) {
+        text-align: center;
+      }
+    }
+  }
+}
+
+mat-drawer-content {
+  height: 100%;
+}
+
+.fill-remaining-space {
+  // fills the remaining space via flexbox. toolbar row uses a flexbox row layout.
+  flex: 1 1 auto;
+}
+
+.average {
+  margin: 0 10px;
+
+  &:first-child {
+    margin-right: 0;
+  }
+  &:last-child {
+    margin-left: 0;
+  }
+}

@@ -1,4 +1,4 @@
-export class Sample {
+export interface Sample {
   date: string;
   time: string;
   code: number;

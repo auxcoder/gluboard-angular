@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "serve:json": "cd json-server/ && json-server --watch db.json -d 2000"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@angular/platform-browser": "~9.0.6",
     "@angular/platform-browser-dynamic": "~9.0.6",
     "@angular/router": "^9.0.6",
+    "date-fns": "^2.11.1",
     "font-awesome": "^4.7.0",
     "g": "^2.0.1",
     "hammerjs": "^2.0.8",
