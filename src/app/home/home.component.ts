@@ -24,9 +24,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
   samples: Sample[];
   samplesErrMsg: string;
   opened: boolean;
-  defaultRanges: Range[];
   today = new Date().valueOf();
   lastAves: aveItem[]
+  defaultRanges: Range[] = [
+    {
+      label: 'Last Month',
+      start: subMonths(this.today, 1).valueOf(),
+      end: this.today
+    },
+    {
+      label: 'Last Two Months',
+      start: subMonths(this.today, 2).valueOf(),
+      end: this.today
+    },
+    {
+      label: 'Last Three Months',
+      start: subMonths(this.today, 2).valueOf(),
+      end: this.today
+    }
+  ]
+  lastSampleDate: number;
 
   constructor(
     private sampleSvc: SampleService,
@@ -35,23 +52,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.opened = true;
-    this.defaultRanges = [
-      {
-        label: 'Last Month',
-        start: subMonths(this.today, 1),
-        end: this.today
-      },
-      {
-        label: 'Last Two Months',
-        start: subMonths(this.today, 2),
-        end: this.today
-      },
-      {
-        label: 'Last Three Months',
-        start: subMonths(this.today, 2),
-        end: this.today
-      }
-    ]
     this.lastAves = [
       {color: 'lightblue', label: 'Last Day', value: '110'},
       {color: 'lightgreen', label: 'Last Three', value: '176'},
@@ -62,17 +62,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.sampleSvc.getSamples({
       code: 58
     })
-      .subscribe(dataset => {
-        //
-        this.samples = dataset;
-        var toDate = this.sampleSvc.lastDayOfSample(dataset);
+      .subscribe(data => {
+        this.samples = data;
+        this.lastSampleDate = this.sampleSvc.lastDayOfSample(data).valueOf();
+        this.updateDefaultRangesWithDataSet();
+        var toDate = this.lastSampleDate;
         var fromDate = subMonths(toDate, 6);
 
         // where you would normally scope.$apply
         // this.zone.run(() => {});
 
-        this.myLineChart.data.datasets[0].data = this.sampleSvc.filterSliceData(dataset, fromDate, toDate)
-          .map(item => Number(item.value));
+        const dataset = this.sampleSvc.filterSliceData(data, fromDate, toDate)
+        this.myLineChart.data.datasets[0].data = dataset.map(item => Number(item.value));
         this.myLineChart.data.labels = dataset.map(item => format(new Date(item.date), 'MMM d'));
         this.myLineChart.update();
       }, errormsg => this.samplesErrMsg = <any>errormsg);
@@ -176,5 +177,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   openPrint() {
     window.print();
+  }
+
+  updateDefaultRangesWithDataSet() {
+    this.defaultRanges = this.defaultRanges.map((item, idx) => {
+      return Object.assign(item, {start: subMonths(this.lastSampleDate, idx + 1).valueOf(), end: this.lastSampleDate});
+    })
+  }
+
+  onChangeRange(range: Range) {
+    const dataset = this.sampleSvc.filterSliceData(this.samples, range.start, range.end)
+    this.myLineChart.data.datasets[0].data = dataset.map(item => Number(item.value));
+    this.myLineChart.data.labels = dataset.map(item => format(new Date(item.date), 'MMM d'));
+    this.myLineChart.update();
   }
 }

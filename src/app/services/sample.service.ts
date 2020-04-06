@@ -22,7 +22,7 @@ export class SampleService {
   constructor(private http: HttpClient, private pHTTPMsg: ProcessHTTPMsgService) { }
 
   filterSliceData(data, start, end) {
-    var dataset = data;
+    let dataset = data;
     if (start) dataset = dataset.filter(sample => isAfter(new Date(sample.date), new Date(start)));
     if (end) dataset = dataset.filter(sample => isBefore(new Date(sample.date), new Date(end)));
     if (!start && !end) dataset = dataset.slice(0, 30);

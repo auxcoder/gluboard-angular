@@ -15,7 +15,7 @@
     <!-- ranges of dates -->
     <mat-list>
       <mat-list-item *ngFor="let range of defaultRanges">
-        <button mat-icon-button mat-flat-button color="primary" (click)="updateDataset(range)">
+        <button mat-icon-button mat-flat-button color="primary" (click)="onChangeRange(range)">
           <mat-icon inline="true">calendar_today</mat-icon>
           {{range.label}}
         </button>
