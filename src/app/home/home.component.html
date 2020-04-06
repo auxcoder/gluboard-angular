@@ -45,22 +45,24 @@
     </mat-toolbar>
 
     <div class="container">
-      <!-- Last sample -->
       <mat-card *ngFor="let item of lastAves"
         [ngStyle]="{'width': 100/lastAves.length + '%', 'border-bottom': '3px solid ' + item.color}" class="average">
-        <mat-card-title class="text-xs" [ngStyle]="{'color': item.color}">{{item.label}}</mat-card-title>
-        <mat-icon>opacity</mat-icon>
+        <mat-card-title class="text-xs" [ngStyle]="{'color': item.color}">
+          {{item.label}}
+        </mat-card-title>
+        <mat-card-content>
+          {{item.value}}
+          <mat-icon>opacity</mat-icon>
+        </mat-card-content>
       </mat-card>
     </div>
 
     <div class="container">
       <mat-card>
         <mat-card-content>
-          <mat-list>
-            <mat-list-item *ngFor="let sample of samples">
-              {{sample.code}}
-            </mat-list-item>
-          </mat-list>
+          <div class="chart-container">
+            <canvas id="myLineChart"></canvas>
+          </div>
         </mat-card-content>
       </mat-card>
 

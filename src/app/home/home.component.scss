@@ -92,7 +92,7 @@
 }
 
 mat-drawer-content {
-  height: 100%;
+  height: 100vh;
 }
 
 .fill-remaining-space {
@@ -104,9 +104,18 @@ mat-drawer-content {
   margin: 0 10px;
 
   &:first-child {
-    margin-right: 0;
+    margin-left: 0;
   }
   &:last-child {
-    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.chart-container {
+  position: relative;
+  height: 10rem;
+  width: 80vw;
+  @include media-breakpoint-up(md) {
+    height: 20rem;
   }
 }
