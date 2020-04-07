@@ -95,9 +95,29 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // this.zone.run(() => {});
 
         const dataset = this.sampleSvc.filterSliceData(data, fromDate, toDate)
+        const groupLevel = dataset.map(item => {
+          item.value = Number(item.value);
+          return item
+        })
+        .reduce((acc, curr) => {
+          if (curr.value < this.levels.low.value) acc[0] += 1;
+          if (curr.value > this.levels.high.value) acc[2] += 1;
+          if (curr.value >= this.levels.low.value && curr.value <= this.levels.high.value) acc[2] += 1;
+          if (curr.value >= this.levels.toohigh.value) acc[3] += 1;
+          return acc;
+        }, [0, 0, 0, 0]);
+
+        // line chart
         this.lineChart.data.datasets[0].data = dataset.map(item => Number(item.value));
         this.lineChart.data.labels = dataset.map(item => format(new Date(item.date), 'MMM d'));
         this.lineChart.update();
+        // pie chart
+        this.pieChart.data.datasets[0].data = this.asPercent(groupLevel);
+        this.pieChart.update();
+        // bar chart
+        this.chartHorizontalBar.data.datasets[0].data = this.asPercent(groupLevel);
+        this.chartHorizontalBar.update();
+
       }, errormsg => this.samplesErrMsg = <any>errormsg);
   }
 
@@ -199,7 +219,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       data: {
         labels: ['Low', 'Normal', 'High', 'Too High'],
         datasets: [{
-          data: [65, 90, 160, 220],
+          data: [],
           backgroundColor: [
             'rgb(78, 115, 223)',
             'rgb(28, 200, 138)',
@@ -251,7 +271,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       data: {
         labels: ['Low', 'Normal', 'High', 'Too High'],
         datasets: [{
-          data: [55, 30, 15],
+          data: [],
           backgroundColor: [
             'rgb(78, 115, 223)',
             'rgb(28, 200, 138)',
@@ -318,8 +338,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   onChangeRange(range: Range) {
     const dataset = this.sampleSvc.filterSliceData(this.samples, range.start, range.end)
+    const groupLevel = dataset.map(item => {
+      item.value = Number(item.value);
+      return item
+    })
+    .reduce((acc, curr) => {
+      if (curr.value < this.levels.low.value) acc[0] += 1;
+      if (curr.value > this.levels.high.value) acc[2] += 1;
+      if (curr.value >= this.levels.low.value && curr.value <= this.levels.high.value) acc[2] += 1;
+      if (curr.value >= this.levels.toohigh.value) acc[3] += 1;
+      return acc;
+    }, [0, 0, 0, 0]);
+    // line chart
     this.lineChart.data.datasets[0].data = dataset.map(item => Number(item.value));
     this.lineChart.data.labels = dataset.map(item => format(new Date(item.date), 'MMM d'));
     this.lineChart.update();
+    // pie chart
+    this.pieChart.data.datasets[0].data = this.asPercent(groupLevel);
+    this.pieChart.update();
+    // bar chart
+    this.chartHorizontalBar.data.datasets[0].data = this.asPercent(groupLevel);
+    this.chartHorizontalBar.update();
   }
 }
