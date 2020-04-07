@@ -67,9 +67,6 @@
 
       .mat-icon-button {
         text-align: center;
-        // .mat-icon {
-        //   font-size: 0.65rem;
-        // }
 
         @include media-breakpoint-up(sm) {
           text-align: left;
@@ -98,17 +95,6 @@ mat-drawer-content {
 .fill-remaining-space {
   // fills the remaining space via flexbox. toolbar row uses a flexbox row layout.
   flex: 1 1 auto;
-}
-
-.average {
-  margin: 0 10px;
-
-  &:first-child {
-    margin-left: 0;
-  }
-  &:last-child {
-    margin-right: 0;
-  }
 }
 
 .chart-container {

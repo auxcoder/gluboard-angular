@@ -44,7 +44,7 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <div class="container">
+    <div class="container" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px">
       <mat-card *ngFor="let item of lastAves"
         [ngStyle]="{'width': 100/lastAves.length + '%', 'border-bottom': '3px solid ' + item.color}" class="average">
         <mat-card-title class="text-xs" [ngStyle]="{'color': item.color}">
