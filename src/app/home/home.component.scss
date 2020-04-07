@@ -93,11 +93,6 @@ mat-drawer-content {
   height: 100vh;
 }
 
-.fill-remaining-space {
-  // fills the remaining space via flexbox. toolbar row uses a flexbox row layout.
-  flex: 1 1 auto;
-}
-
 .averages {
   mat-card {
     margin-bottom: 15px;

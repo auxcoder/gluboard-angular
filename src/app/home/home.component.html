@@ -28,13 +28,11 @@
   <mat-drawer-content>
     <mat-toolbar>
       <mat-toolbar-row>
-        <button mat-button color="primary" (click)="sidenav.toggle()">
+        <button mat-icon-button color="primary" (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
 
-        <span color="page-title">Samples Board</span>
-
-        <span class="fill-remaining-space"></span>
+        <span class="flex-spacer"></span>
 
         <button mat-button role="button" aria-haspopup="true" (click)="openLogin()">
           <mat-icon inline="true">perm_identity</mat-icon> Login
@@ -45,6 +43,9 @@
         </button>
       </mat-toolbar-row>
     </mat-toolbar>
+    <div class="container mv-0" fxLayout="row">
+      <h1 color="page-title">Samples Board</h1>
+    </div>
 
     <div class="container averages" fxLayout="row wrap" fxLayoutGap="10px">
       <mat-card *ngFor="let item of lastAves" [ngStyle]="{'border-bottom': '3px solid ' + item.color}" class="average"
@@ -78,7 +79,7 @@
             <canvas id="pieChart"></canvas>
           </div>
 
-          <small class="leyend">
+          <div class="leyend">
             <span class="">
               <mat-icon inline="true" style="color: #4e73df;">lens</mat-icon> Low
             </span>
@@ -91,7 +92,7 @@
             <span class="">
               <mat-icon inline="true" style="color: #e74a3b;">lens</mat-icon> Too High
             </span>
-          </small>
+          </div>
         </mat-card-content>
       </mat-card>
 
@@ -102,7 +103,7 @@
             <canvas id="chartHorizontalBar"></canvas>
           </div>
 
-          <small class="leyend">
+          <div class="leyend">
             <span class="">
               <mat-icon inline="true" style="color: #4e73df;">lens</mat-icon> Low
             </span>
@@ -115,7 +116,7 @@
             <span class="">
               <mat-icon inline="true" style="color: #e74a3b;">lens</mat-icon> Too High
             </span>
-          </small>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
