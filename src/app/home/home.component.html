@@ -15,9 +15,11 @@
     <!-- ranges of dates -->
     <mat-list>
       <mat-list-item *ngFor="let range of defaultRanges">
-        <button mat-icon-button mat-flat-button color="primary" (click)="onChangeRange(range)">
-          <mat-icon inline="true">calendar_today</mat-icon>
-          {{range.label}}
+        <button mat-button mat-flat-button color="primary" (click)="onChangeRange(range)">
+          <span fxLayout="row" fxLayout.xs="column">
+            <mat-icon mat-list-icon>calendar_today</mat-icon>
+            <span mat-line> {{range.label}}</span>
+          </span>
         </button>
       </mat-list-item>
     </mat-list>
@@ -44,15 +46,15 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <div class="container" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px">
-      <mat-card *ngFor="let item of lastAves"
-        [ngStyle]="{'width': 100/lastAves.length + '%', 'border-bottom': '3px solid ' + item.color}" class="average">
-        <mat-card-title class="text-xs" [ngStyle]="{'color': item.color}">
-          {{item.label}}
-        </mat-card-title>
-        <mat-card-content>
-          {{item.value}}
-          <mat-icon>opacity</mat-icon>
+    <div class="container averages" fxLayout="row wrap" fxLayoutGap="10px">
+      <mat-card *ngFor="let item of lastAves" [ngStyle]="{'border-bottom': '3px solid ' + item.color}" class="average"
+        fxFlex="0 1 calc(25% - 10px)" fxFlex.lt-sm="0 1 calc(50% - 10px)">
+        <mat-card-content fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="space-between">
+          <div fxFlexAlign="center">
+            <p class="label" [ngStyle]="{'color': item.color}">{{item.label}}</p>
+            <p class="value">{{item.value}} <span class="units">ml/dl</span></p>
+          </div>
+          <mat-icon class="icon" fxFlexAlign="center" [ngStyle]="{'color': item.color}">opacity</mat-icon>
         </mat-card-content>
       </mat-card>
     </div>
@@ -68,8 +70,8 @@
       </mat-card>
     </div>
 
-    <div class="container" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px">
-      <mat-card fxFlex="50">
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between" fxLayoutGap="10px">
+      <mat-card fxFlex="50" fxFlex.lt-md="100%">
         <mat-card-title>Pre-breakfast, Sampling By Value</mat-card-title>
         <mat-card-content>
           <div class="chart-container">
@@ -78,8 +80,8 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card fxFlex="50">
-        <mat-card-title>Average Coparison</mat-card-title>
+      <mat-card fxFlex="50" fxFlex.lt-md="100%">
+        <mat-card-title>Average Comparison</mat-card-title>
         <mat-card-content>
           <div class="chart-container">
             <canvas id="chartHorizontalBar"></canvas>

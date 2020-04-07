@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'variables';
+@import 'mixins';
 @import '../node_modules/font-awesome/scss/font-awesome';
 
 body {
@@ -10,6 +11,9 @@ body {
 .container {
   margin: 20px;
   display: flex;
+  @include media-breakpoint-down(sm) {
+    margin: 12px;
+  }
 }
 
 .flex-spacer {
@@ -22,4 +26,11 @@ body {
 
 .text-xs {
   font-size: .75rem;
+}
+
+.mat-card-title {
+  color: $primary;
+  @include media-breakpoint-down(sm) {
+    font-size: 20px;
+  }
 }

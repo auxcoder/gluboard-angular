@@ -27,7 +27,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   samplesErrMsg: string;
   opened: boolean;
   today = new Date().valueOf();
-  lastAves: aveItem[]
+  lastAves: aveItem[] = [
+    {color: '#4e73df', label: 'Last Day', value: '110'},
+    {color: '#1cc88a', label: 'Last Three', value: '176'},
+    {color: '#36b9cc', label: 'Last Seven', value: '198'},
+    {color: '#e74a3b', label: 'Last Month', value: '186'},
+  ];
   defaultRanges: Range[] = [
     {
       label: 'Last Month',
@@ -75,12 +80,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.opened = true;
-    this.lastAves = [
-      {color: 'lightblue', label: 'Last Day', value: '110'},
-      {color: 'lightgreen', label: 'Last Three', value: '176'},
-      {color: 'lightpink', label: 'Last Seven', value: '198'},
-      {color: 'violet', label: 'Last Month', value: '186'},
-    ];
     // get data
     this.sampleSvc.getSamples({
       code: 58
