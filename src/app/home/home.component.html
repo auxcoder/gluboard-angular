@@ -1,0 +1,133 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" #sidenav [(opened)]="opened" role="navigation" class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <div class="sidebar-brand-icon">
+        <mat-icon inline="true">opacity</mat-icon>
+      </div>
+      <span class="sidebar-brand-text">GluBoard</span>
+    </a>
+
+    <mat-divider></mat-divider>
+
+    <!-- heading -->
+    <div class="sidebar-heading">Intervals</div>
+
+    <!-- ranges of dates -->
+    <mat-list>
+      <mat-list-item *ngFor="let range of defaultRanges">
+        <button mat-button mat-flat-button color="primary" (click)="onChangeRange(range)">
+          <span fxLayout="row" fxLayout.xs="column">
+            <mat-icon mat-list-icon>calendar_today</mat-icon>
+            <span mat-line> {{range.label}}</span>
+          </span>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <button mat-icon-button color="primary" (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <span class="flex-spacer"></span>
+
+        <button mat-button role="button" aria-haspopup="true" (click)="openLogin()">
+          <mat-icon inline="true">perm_identity</mat-icon> Login
+        </button>
+
+        <button mat-button type="button" class="" (click)="openPrint()">
+          <mat-icon inline="true">print</mat-icon> Print
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="container mv-0" fxLayout="row">
+      <h1 color="page-title">Samples Board</h1>
+    </div>
+
+    <div class="container averages" fxLayout="row wrap" fxLayoutGap="10px">
+      <mat-card *ngFor="let item of lastAves" [ngStyle]="{'border-bottom': '3px solid ' + item.color}" class="average"
+        fxFlex="0 1 calc(25% - 10px)" fxFlex.lt-sm="0 1 calc(50% - 10px)">
+        <mat-card-content fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="space-between">
+          <div fxFlexAlign="center">
+            <p class="label" [ngStyle]="{'color': item.color}">{{item.label}}</p>
+            <p class="value">{{item.value}} <span class="units">ml/dl</span></p>
+          </div>
+          <mat-icon class="icon" fxFlexAlign="center" [ngStyle]="{'color': item.color}">opacity</mat-icon>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="container" fxLayout="row" fxLayoutAlign="space-between">
+      <mat-card fxFlex="100">
+        <mat-card-title>Values Chart</mat-card-title>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas id="lineChart"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between" fxLayoutGap="10px">
+      <mat-card fxFlex="50" fxFlex.lt-md="100%">
+        <mat-card-title>Pre-breakfast, Sampling By Value</mat-card-title>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas id="pieChart"></canvas>
+          </div>
+
+          <div class="leyend">
+            <span class="">
+              <mat-icon inline="true" style="color: #4e73df;">lens</mat-icon> Low
+            </span>
+            <span class="">
+              <mat-icon inline="true" style="color: #1cc88a;">lens</mat-icon> Normal
+            </span>
+            <span class="">
+              <mat-icon inline="true" style="color: #f6c23e;">lens</mat-icon> High
+            </span>
+            <span class="">
+              <mat-icon inline="true" style="color: #e74a3b;">lens</mat-icon> Too High
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card fxFlex="50" fxFlex.lt-md="100%">
+        <mat-card-title>Average Comparison</mat-card-title>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas id="chartHorizontalBar"></canvas>
+          </div>
+
+          <div class="leyend">
+            <span class="">
+              <mat-icon inline="true" style="color: #4e73df;">lens</mat-icon> Low
+            </span>
+            <span class="">
+              <mat-icon inline="true" style="color: #1cc88a;">lens</mat-icon> Normal
+            </span>
+            <span class="">
+              <mat-icon inline="true" style="color: #f6c23e;">lens</mat-icon> High
+            </span>
+            <span class="">
+              <mat-icon inline="true" style="color: #e74a3b;">lens</mat-icon> Too High
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div [hidden]="samples || samplesErrMsg">
+      <mat-spinner></mat-spinner>
+      <h4>Loading...</h4>
+    </div>
+    <div *ngIf="samplesErrMsg">
+      <h2>Error</h2>
+      <p>{{samplesErrMsg}}</p>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
