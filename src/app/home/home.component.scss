@@ -139,6 +139,8 @@ mat-drawer-content {
 .chart-container {
   position: relative;
   height: 10rem;
+  margin-bottom: 15px;
+
   @include media-breakpoint-up(md) {
     height: 20rem;
   }

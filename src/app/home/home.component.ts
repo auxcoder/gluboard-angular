@@ -197,9 +197,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.pieChart = new Chart(this.canvas.getContext('2d'), {
       type: 'doughnut',
       data: {
-        labels: ["Direct", "Referral", "Social"],
+        labels: ['Low', 'Normal', 'High', 'Too High'],
         datasets: [{
-          data: [55, 30, 15],
+          data: [65, 90, 160, 220],
           backgroundColor: [
             'rgb(78, 115, 223)',
             'rgb(28, 200, 138)',
@@ -223,7 +223,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       options: {
         responsive: true,
         legend: {
-          position: 'bottom',
+          display: false,
         },
         tooltips: {
           backgroundColor: "rgb(255,255,255)",
@@ -240,7 +240,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           animateRotate: true
         },
         maintainAspectRatio: false,
-        cutoutPercentage: 66,
+        cutoutPercentage: 56,
       },
     });
 
