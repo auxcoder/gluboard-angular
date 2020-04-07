@@ -57,23 +57,44 @@
       </mat-card>
     </div>
 
-    <div class="container">
-      <mat-card>
+    <div class="container" fxLayout="row" fxLayoutAlign="space-between">
+      <mat-card fxFlex="100">
+        <mat-card-title>Values Chart</mat-card-title>
         <mat-card-content>
           <div class="chart-container">
-            <canvas id="myLineChart"></canvas>
+            <canvas id="lineChart"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="container" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px">
+      <mat-card fxFlex="50">
+        <mat-card-title>Pre-breakfast, Sampling By Value</mat-card-title>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas id="pieChart"></canvas>
           </div>
         </mat-card-content>
       </mat-card>
 
-      <div [hidden]="samples || samplesErrMsg">
-        <mat-spinner></mat-spinner>
-        <h4>Loading...</h4>
-      </div>
-      <div *ngIf="samplesErrMsg">
-        <h2>Error</h2>
-        <p>{{samplesErrMsg}}</p>
-      </div>
+      <mat-card fxFlex="50">
+        <mat-card-title>Average Coparison</mat-card-title>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas id="chartHorizontalBar"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div [hidden]="samples || samplesErrMsg">
+      <mat-spinner></mat-spinner>
+      <h4>Loading...</h4>
+    </div>
+    <div *ngIf="samplesErrMsg">
+      <h2>Error</h2>
+      <p>{{samplesErrMsg}}</p>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

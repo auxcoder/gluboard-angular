@@ -19,7 +19,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   canvas: any;
   ctx: any;
   zone: NgZone;
-  myLineChart: any;
+  lineChart: any;
+  pieChart: any;
+  chartHorizontalBar: any;
   // data
   samples: Sample[];
   samplesErrMsg: string;
@@ -44,6 +46,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   ]
   lastSampleDate: number;
+  levels = {
+    low: {
+      value: 70,
+      label: 'Low',
+      total: 0,
+    },
+    normal: {
+      total: 0,
+      label: 'High',
+    },
+    high: {
+      value: 130,
+      label: 'High',
+      total: 0
+    },
+    toohigh: {
+      value: 160,
+      label: 'High',
+      total: 0
+    }
+  }
 
   constructor(
     private sampleSvc: SampleService,
@@ -73,16 +96,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // this.zone.run(() => {});
 
         const dataset = this.sampleSvc.filterSliceData(data, fromDate, toDate)
-        this.myLineChart.data.datasets[0].data = dataset.map(item => Number(item.value));
-        this.myLineChart.data.labels = dataset.map(item => format(new Date(item.date), 'MMM d'));
-        this.myLineChart.update();
+        this.lineChart.data.datasets[0].data = dataset.map(item => Number(item.value));
+        this.lineChart.data.labels = dataset.map(item => format(new Date(item.date), 'MMM d'));
+        this.lineChart.update();
       }, errormsg => this.samplesErrMsg = <any>errormsg);
   }
 
   ngAfterViewInit() {
-    this.canvas = document.getElementById('myLineChart');
-    this.ctx = this.canvas.getContext('2d');
-    this.myLineChart = new Chart(this.ctx, {
+    // line
+    this.canvas = document.getElementById('lineChart');
+    this.lineChart = new Chart(this.canvas.getContext('2d'), {
       type: 'line',
       data: {
         labels: [],
@@ -169,6 +192,115 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       }
     });
+
+    // pie
+    this.canvas = document.getElementById('pieChart');
+    this.pieChart = new Chart(this.canvas.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ["Direct", "Referral", "Social"],
+        datasets: [{
+          data: [55, 30, 15],
+          backgroundColor: [
+            'rgb(78, 115, 223)',
+            'rgb(28, 200, 138)',
+            "rgb(246, 194, 62)",
+            'rgb(231, 74, 59)'
+          ],
+          hoverBackgroundColor: [
+            'rgb(78, 115, 223, 0.2)',
+            'rgba(28, 200, 138, 0.2)',
+            "rgba(246, 194, 62, 0.2)",
+            'rgba(231, 74, 59, 0.2)'
+          ],
+          borderColor: [
+            'rgb(78, 115, 223)',
+            'rgb(28, 200, 138)',
+            "rgb(246, 194, 62)",
+            'rgb(231, 74, 59)'
+          ],
+        }],
+      },
+      options: {
+        responsive: true,
+        legend: {
+          position: 'bottom',
+        },
+        tooltips: {
+          backgroundColor: "rgb(255,255,255)",
+          bodyFontColor: "#858796",
+          borderColor: '#dddfeb',
+          borderWidth: 1,
+          xPadding: 15,
+          yPadding: 15,
+          displayColors: false,
+          caretPadding: 10,
+        },
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        },
+        maintainAspectRatio: false,
+        cutoutPercentage: 66,
+      },
+    });
+
+    // var color = Chart.helpers.color;
+    this.canvas = document.getElementById('chartHorizontalBar');
+    this.chartHorizontalBar = new Chart(this.canvas.getContext('2d'), {
+      type: 'horizontalBar',
+      data: {
+        labels: ['Low', 'Normal', 'High', 'Too High'],
+        datasets: [{
+          data: [55, 30, 15],
+          backgroundColor: [
+            'rgb(78, 115, 223)',
+            'rgb(28, 200, 138)',
+            "rgb(246, 194, 62)",
+            'rgb(231, 74, 59)'
+          ],
+          hoverBackgroundColor: [
+            'rgb(78, 115, 223, 0.2)',
+            'rgba(28, 200, 138, 0.2)',
+            "rgba(246, 194, 62, 0.2)",
+            'rgba(231, 74, 59, 0.2)'
+          ],
+          borderColor: [
+            'rgb(78, 115, 223)',
+            'rgb(28, 200, 138)',
+            "rgb(246, 194, 62)",
+            'rgb(231, 74, 59)'
+          ],
+          borderWidth: 2,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false,
+        },
+        scales: {
+          xAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        },
+        tooltips: {
+          displayColors: false,
+        }
+      }
+    });
+  }
+
+  asPercent(levels) {
+    const total = levels.reduce((acc, curr) => (acc + curr), 0);
+    return levels.map(level => {
+      return Math.round(level * 100 / total);
+    });
   }
 
   openLogin() {
@@ -187,8 +319,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   onChangeRange(range: Range) {
     const dataset = this.sampleSvc.filterSliceData(this.samples, range.start, range.end)
-    this.myLineChart.data.datasets[0].data = dataset.map(item => Number(item.value));
-    this.myLineChart.data.labels = dataset.map(item => format(new Date(item.date), 'MMM d'));
-    this.myLineChart.update();
+    this.lineChart.data.datasets[0].data = dataset.map(item => Number(item.value));
+    this.lineChart.data.labels = dataset.map(item => format(new Date(item.date), 'MMM d'));
+    this.lineChart.update();
   }
 }
