@@ -1,1 +1,35 @@
 $fa-font-path: '../node_modules/font-awesome/fonts';
+
+$primary:       #4e73df;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px
+) !default;
+
+// Custom Colors
+$brand-google: #ea4335;
+$brand-facebook: #3b5998;
+
+// Spacing Variables
+// Change below variable if the height of the navbar changes
+$topbar-base-height: 2rem;
+// Change below variable to change the width of the sidenav
+$sidebar-base-width: 14rem;
+// Change below variable to change the width of the sidenav when collapsed
+$sidebar-collapsed-width: 6.5rem;
