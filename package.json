@@ -46,7 +46,7 @@
     "@typescript-eslint/parser": "^2.24.0",
     "codelyzer": "^5.0.0",
     "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsdoc": "^22.0.1",
+    "eslint-plugin-jsdoc": "^62.8.0",
     "jasmine-core": "^3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "json-server": "^0.17.1",
